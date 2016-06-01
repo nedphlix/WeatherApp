@@ -91,8 +91,8 @@ window.onload = function() {
 	if (!navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(showPosition);
 	} else {
-		//var city = String(window.prompt("Could not discover your location. Please enter a city:"));
-		var city = "London";
+		var city = String(window.prompt("Could not discover your location. Please enter a city:"));
+		// var city = "London";
 		updateByCity(city);	
 	}
 
