@@ -1,0 +1,48 @@
+var response = {
+	"coord": {
+		"lon": 2.35,
+		"lat": 48.85
+		},
+	"weather": [
+		{
+			"id": 500,
+			"main": "Rain",
+			"description": "light rain",
+			"icon":"10d"
+		},
+		{"id": 701,
+		"main": "Mist",
+		"description": "mist",
+		"icon": "50d"
+		}
+	],
+	"base": "cmc stations",
+	"main": {
+		"temp": 289.22,
+		"pressure": 1017,
+		"humidity": 87,
+		"temp_min": 287.59,
+		"temp_max":291.15
+	},
+	"wind": {
+		"speed": 4.1,
+		"deg":350
+	},
+	"rain": {
+		"1h" :0.25
+	},
+	"clouds": {
+		"all": 75
+	},
+	"dt" :1464790799,
+	"sys":{
+		"type": 1,
+		"id": 5615,
+		"message" :0.0052,
+		"country":"FR",
+		"sunrise":1464753065,
+		"sunset":1464810398},
+		"id":2988507,
+		"name":"Paris",
+		"cod":200
+	}
