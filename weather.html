@@ -3,21 +3,39 @@
 <head>
 	<title></title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="wclassth=device-wclassth, initial-scale=1">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="weather.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="weather_styles.css">
 </head>
 <body>
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h1>Hello, World</h1>
+	<div class="weather-app">
+		<div class="left">
+			<div class="temperature">
+				<span id="temperature">0</span>&deg;
+			</div>
+			<div class="location">
+				<span id="location">Unknown</span>
+			</div>
+		</div>
+		<div class="right">
+			<div class="top">
+				<img id="icon" width="75px" src="">
+			</div>
+			<div class="bottom">
+				<div class="humidity">
+					<img src="">
+					<span id="humidity">0</span>%
+				</div>
+				<div class="wind">
+					<span id="wind">0</span> mph
+				</div>
 			</div>
 		</div>
 	</div>
 
 </body>
+</html>
