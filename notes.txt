@@ -1,0 +1,5 @@
+Background are large pictures that adapt to the current weather.
+Automatically gets your location.
+Switches between C and F.
+whatstheweaterlike.co ?
+Heading: It is currently _____ in Paris, France. Option to change the city?
