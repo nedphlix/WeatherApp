@@ -48,8 +48,16 @@ function sendRequest(url) {
 	xmlhttp.send();
 }
 
-function K2C (k) {
+function K2C(k) {
 	return Math.round(k - 273.15);
+}
+
+function C2F(c) {
+	return Math.round(c * 1.8 + 32);
+}
+
+function F2C(f) {
+	return Math.round((f - 32) / 1.8);
 }
 
 function mphToKmh(mph) {
@@ -80,6 +88,32 @@ function showPosition(position) {
 	updateByGeo(position.coords.latitude, position.coords.longitude);
 }
 
+function tempSwitcherF2C() {
+	if (celsius.className != "temp-active") {
+		celsius.className = "temp-active";
+		fahrenheit.className = "";
+		temp.innerHTML = F2C(+temp.innerHTML);
+		tempUnit.innerHTML = "&deg;&nbsp;C";	
+	}
+	
+}
+
+function tempSwitcherC2F() {
+	if (fahrenheit.className != "temp-active") {
+		fahrenheit.className = "temp-active";
+		celsius.className = "";
+		temp.innerHTML = C2F(+temp.innerHTML);
+		tempUnit.innerHTML = "&deg;&nbsp;F";	
+	}
+	
+}
+
+function switchCity () {
+	var city = String(window.prompt("Please type your city here:"));
+	// var city = "London";
+	updateByCity(city);	
+}
+
 window.onload = function() {
 	temp = document.getElementById("temperature");
 	desc = document.getElementById("description");
@@ -87,15 +121,21 @@ window.onload = function() {
 	pic = document.getElementById("background-pic");
 	humidity = document.getElementById("humidity");
 	wind = document.getElementById("wind");
+	celsius = document.getElementById("celsius");
+	fahrenheit = document.getElementById("fahrenheit");
+	tempUnit = document.getElementById("temp-unit");
+	citySwitch = document.getElementById("switch-city");
+
+	celsius.addEventListener("click", tempSwitcherF2C);
+	fahrenheit.addEventListener("click", tempSwitcherC2F);
+	citySwitch.addEventListener("click", switchCity);
 
 	if (!navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(showPosition);
 	} else {
-		var city = String(window.prompt("Could not discover your location. Please enter a city:"));
+		var city = String(window.prompt("Uh oh! It looks like you disabled location services in your browser. Please type your city here:"));
 		// var city = "London";
 		updateByCity(city);	
 	}
-
-	
-
 }
+
