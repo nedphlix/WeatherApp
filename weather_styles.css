@@ -90,20 +90,16 @@ body {
 }
 
 .noun-img {
-	height: 32px;
+	height: 24px;
 }
 
 .humidity-wind {
-	margin-top: 64px;
-	font-size: 16px;
-}
-
-.switcher {
-	font-size: 16px;
-	margin-bottom: 32px;
+	margin-top: 72px;
+	font-size: 12px;
 }
 
 .footer {
+	margin-top: 24px;
 	font-size: 12px;
 	font-weight: 300;
 	font-style: italic;

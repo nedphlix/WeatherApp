@@ -1,3 +1,5 @@
+// Global variable declarations
+
 var APPID = "89c2f6ec1e145fd124fc3f4dc6f87846";
 var temp;
 var desc;
@@ -5,13 +7,12 @@ var loc;
 var pic;
 var humidity;
 var wind;
+var geoOptions = {
+	maximumAge: 5 * 60 * 1000,
+	timeout: 10 * 1000,
+	}
 
-function updateByZip(zip) {
-	var url = "http://api.openweathermap.org/data/2.5/weather?" +
-		"zip=" + zip +
-		"&APPID=" + APPID;
-	sendRequest(url);  
-}
+// API calls
 
 function updateByGeo(lat, lon) {
 	var url = "http://api.openweathermap.org/data/2.5/weather?" +
@@ -36,6 +37,7 @@ function sendRequest(url) {
 			var data = JSON.parse(xmlhttp.responseText);
 			var weather = {};
 			weather.pic = data.weather[0].icon;
+			// weather.pic = "50n";
 			weather.humidity = data.main.humidity;
 			weather.wind = mphToKmh(data.wind.speed);
 			weather.loc = data.name + ", " + data.sys.country;
@@ -48,6 +50,8 @@ function sendRequest(url) {
 	xmlhttp.send();
 }
 
+// Helper functions
+
 function K2C(k) {
 	return Math.round(k - 273.15);
 }
@@ -59,6 +63,35 @@ function C2F(c) {
 function F2C(f) {
 	return Math.round((f - 32) / 1.8);
 }
+
+function tempSwitcherF2C() {
+	if (celsius.className != "temp-active") {
+		celsius.className = "temp-active";
+		fahrenheit.className = "";
+		temp.innerHTML = F2C(+temp.innerHTML);
+		tempUnit.innerHTML = "&deg;&nbsp;C";	
+	}
+}
+
+function tempSwitcherC2F() {
+	if (fahrenheit.className != "temp-active") {
+		fahrenheit.className = "temp-active";
+		celsius.className = "";
+		temp.innerHTML = C2F(+temp.innerHTML);
+		tempUnit.innerHTML = "&deg;&nbsp;F";	
+	}	
+}
+
+function switchCity () {
+	var city = String(window.prompt("Please type your city here:"));
+	// var city = "London";
+	updateByCity(city);	
+}
+
+function showCredits() {
+	window.alert("Built for Free Code Camp by Sebastien Phlix.\nThanks to Samuel Q. Green and Designify.me from Noun Project for the beautiful icons <3");
+}
+
 
 function mphToKmh(mph) {
 	var kmh = mph * 1.60934;
@@ -73,6 +106,8 @@ function toTitleCase(str) {
     );
 }
 
+// Editing the HTML
+
 function update(weather) {
 	temp.innerHTML = weather.temp;
 	desc.innerHTML = weather.desc;
@@ -84,35 +119,23 @@ function update(weather) {
 	console.log(weather.pic);
 }
 
-function showPosition(position) {
-	updateByGeo(position.coords.latitude, position.coords.longitude);
+// Using geolocation
+
+function geoSuccess(position) {
+	console.log("ran geoSuccess");
+	lat = position.coords.latitude;
+	lon = position.coords.longitude;
+	updateByGeo(lat, lon);
 }
 
-function tempSwitcherF2C() {
-	if (celsius.className != "temp-active") {
-		celsius.className = "temp-active";
-		fahrenheit.className = "";
-		temp.innerHTML = F2C(+temp.innerHTML);
-		tempUnit.innerHTML = "&deg;&nbsp;C";	
-	}
-	
-}
-
-function tempSwitcherC2F() {
-	if (fahrenheit.className != "temp-active") {
-		fahrenheit.className = "temp-active";
-		celsius.className = "";
-		temp.innerHTML = C2F(+temp.innerHTML);
-		tempUnit.innerHTML = "&deg;&nbsp;F";	
-	}
-	
-}
-
-function switchCity () {
-	var city = String(window.prompt("Please type your city here:"));
+function geoError() {
+	console.log("ran geoError");
+    var city = String(window.prompt("Uh oh! It looks like you disabled location services in your browser. Please type your city here:"));
 	// var city = "London";
 	updateByCity(city);	
 }
+
+// Loading the script
 
 window.onload = function() {
 	temp = document.getElementById("temperature");
@@ -125,17 +148,13 @@ window.onload = function() {
 	fahrenheit = document.getElementById("fahrenheit");
 	tempUnit = document.getElementById("temp-unit");
 	citySwitch = document.getElementById("switch-city");
+	credits = document.getElementById("credits");
 
 	celsius.addEventListener("click", tempSwitcherF2C);
 	fahrenheit.addEventListener("click", tempSwitcherC2F);
 	citySwitch.addEventListener("click", switchCity);
-
-	if (!navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(showPosition);
-	} else {
-		var city = String(window.prompt("Uh oh! It looks like you disabled location services in your browser. Please type your city here:"));
-		// var city = "London";
-		updateByCity(city);	
-	}
+	credits.addEventListener("click", showCredits);
+	
+	navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
 }
 
